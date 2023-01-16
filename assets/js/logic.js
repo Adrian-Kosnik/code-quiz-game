@@ -8,6 +8,7 @@ startBtn.addEventListener("click", function() {
     console.log(`I have been clicked!`);
     container.setAttribute("class", "hide");
     questionsSectDiv.setAttribute("class", "show");
+    score = 0;
     setTime();
 });
 
@@ -19,10 +20,10 @@ let answer1li = document.createElement("li");
 let answer2li = document.createElement("li");
 let answer3li = document.createElement("li");
 let answer4li = document.createElement("li");
-let answer1btn = document.createElement("button")
-let answer2btn = document.createElement("button")
-let answer3btn = document.createElement("button")
-let answer4btn = document.createElement("button")
+let answer1btn = document.createElement("button");
+let answer2btn = document.createElement("button");
+let answer3btn = document.createElement("button");
+let answer4btn = document.createElement("button");
 
 // Changes the h2 to the question
 questionTitleh2.textContent = questionsArr[0].question
@@ -87,8 +88,6 @@ let finalScoreUpdate = function() {
     score++
     localStorage.setItem("score", score);
 }
-console.log(`This is the questionsArr[0].correctAnswer: ${questionsArr[0].correctAnswer}`)
-console.log(`This is the answer1btn.textContent: ${answer1btn.textContent}`)
 // Event listener that looks at the answers and adds to the score or lowers time.
 answer1btn.addEventListener("click", function() {
     if (answer1btn.textContent == questionsArr[0].correctAnswer) {
@@ -120,7 +119,7 @@ answer3btn.addEventListener("click", function() {
 answer4btn.addEventListener("click", function() {
     if (answer1btn.textContent == questionsArr[3].correctAnswer) {
         finalScoreUpdate();
-    } else if (secondsLeft > 0) {
+    } else if (secondsLeft >= 0) {
         secondsLeft = secondsLeft - 10;
     };
     checkIfGameOver();
@@ -135,14 +134,14 @@ answer4btn.addEventListener("click", function() {
 
 let checkIfGameOver = function() {
     if (questionsArr[questNumTrack] == undefined) {
-        timeCheck = false
+        // timeCheck = false
         // secondsLeft = 0
         questionsSectDiv.setAttribute("class", "hide")
         container.setAttribute("class", "hide")
         endScreenEl.setAttribute("class", "show")
     };
     if (secondsLeft <= 0) {
-        timeCheck = false
+        // timeCheck = false
         // secondsLeft = 0
         questionsSectDiv.setAttribute("class", "hide")
         container.setAttribute("class", "hide")
@@ -150,13 +149,27 @@ let checkIfGameOver = function() {
     };
 };
 
+// Clicking submit will save the users name to memory and move you to
+// high score page.
+let subButtonEl = document.querySelector("#submit");
+subButtonEl.addEventListener("click", function() {
+    let userName = document.querySelector("#initials").value;
+    localStorage.setItem("userScore", [userName, score]);
+    document.location.href = '/highscores.html';
+});
+
+// TODO: Need to add a function that adds a li item for every saved score to the
+// TODO: <ol> thats already there. fill it up, save it, view it.
+
+
+
 // !End of Final score screen section
 
 // !Timer section
 
 let timeEl = document.querySelector("#time");
 let secondsLeft = 60;
-let timeCheck = true;
+// let timeCheck = true;
 
 function setTime() {
   // Sets interval in variable
@@ -164,10 +177,10 @@ function setTime() {
     secondsLeft--;
     timeEl.textContent = secondsLeft;
 
-    if(!timeCheck) {
+    if(secondsLeft <= 0) {
       // Stops execution of action at set interval
       clearInterval(timerInterval);
-      secondsLeft = 0
+    //   secondsLeft = 0
     //   finalScore();
     }
 
@@ -200,4 +213,3 @@ let dispEndScreen = function() {
 
 // !End of end-screen section
 
-// TODO: Write a function that tracks number of questions answered.
