@@ -8,8 +8,11 @@ startBtn.addEventListener("click", function() {
     console.log(`I have been clicked!`);
     container.setAttribute("class", "hide");
     questionsSectDiv.setAttribute("class", "show");
+    score = 0;
     setTime();
 });
+
+// !Questions section
 
 // Create ordered list items
 let listEl = document.createElement("ol");
@@ -17,10 +20,10 @@ let answer1li = document.createElement("li");
 let answer2li = document.createElement("li");
 let answer3li = document.createElement("li");
 let answer4li = document.createElement("li");
-let answer1btn = document.createElement("button")
-let answer2btn = document.createElement("button")
-let answer3btn = document.createElement("button")
-let answer4btn = document.createElement("button")
+let answer1btn = document.createElement("button");
+let answer2btn = document.createElement("button");
+let answer3btn = document.createElement("button");
+let answer4btn = document.createElement("button");
 
 // Changes the h2 to the question
 questionTitleh2.textContent = questionsArr[0].question
@@ -29,7 +32,11 @@ answer1btn.textContent = questionsArr[0].choices[0];
 answer2btn.textContent = questionsArr[0].choices[1];
 answer3btn.textContent = questionsArr[0].choices[2];
 answer4btn.textContent = questionsArr[0].choices[3];
-
+// Adds class to the answers
+answer1btn.setAttribute("class", "answer1btn")
+answer2btn.setAttribute("class", "answer2btn")
+answer3btn.setAttribute("class", "answer3btn")
+answer4btn.setAttribute("class", "answer4btn")
 
 // this adds the list to choices div within the DOM
 choicesDiv.appendChild(listEl)
@@ -59,10 +66,110 @@ answer4btn.addEventListener("click", function() {
     console.log(`Im answer4 and I have been clicked!`)
 });
 
-// This is the timer section
+let questNumTrack = 1
+let score = localStorage.getItem("score");
+let finalScoreEl = document.querySelector("#final-score")
+
+let nextQuest = function() {
+    // Changes the h2 to the new question
+    questionTitleh2.textContent = questionsArr[questNumTrack].question;
+    // This fills list with new questions
+    answer1btn.textContent = questionsArr[questNumTrack].choices[0];
+    answer2btn.textContent = questionsArr[questNumTrack].choices[1];
+    answer3btn.textContent = questionsArr[questNumTrack].choices[2];
+    answer4btn.textContent = questionsArr[questNumTrack].choices[3];
+
+    questNumTrack++
+};
+
+// Function that creates, updates the score. stored locally in users browser.
+let finalScoreUpdate = function() {
+    finalScoreEl.textContent = score;
+    score++
+    localStorage.setItem("score", score);
+}
+// Event listener that looks at the answers and adds to the score or lowers time.
+answer1btn.addEventListener("click", function() {
+    if (answer1btn.textContent == questionsArr[0].correctAnswer) {
+        finalScoreUpdate();
+    } else if (secondsLeft > 0) {
+        secondsLeft = secondsLeft - 10;
+    };
+    checkIfGameOver();
+    nextQuest();
+});
+answer2btn.addEventListener("click", function() {
+    if (answer1btn.textContent == questionsArr[1].correctAnswer) {
+        finalScoreUpdate();
+    } else if (secondsLeft > 0) {
+        secondsLeft = secondsLeft - 10;
+    };
+    checkIfGameOver();
+    nextQuest();
+});
+answer3btn.addEventListener("click", function() {
+    if (answer1btn.textContent == questionsArr[2].correctAnswer) {
+        finalScoreUpdate();
+    } else if (secondsLeft > 0) {
+        secondsLeft = secondsLeft - 10;
+    };
+    checkIfGameOver();
+    nextQuest();
+});
+answer4btn.addEventListener("click", function() {
+    if (answer1btn.textContent == questionsArr[3].correctAnswer) {
+        finalScoreUpdate();
+    } else if (secondsLeft >= 0) {
+        secondsLeft = secondsLeft - 10;
+    };
+    checkIfGameOver();
+    nextQuest();
+});
+
+// !End of Questions section
+
+// !Final score screen section
+
+// This part takes you from questions screen to final score screen
+
+let checkIfGameOver = function() {
+    if (questionsArr[questNumTrack] == undefined) {
+        // timeCheck = false
+        // secondsLeft = 0
+        questionsSectDiv.setAttribute("class", "hide")
+        container.setAttribute("class", "hide")
+        endScreenEl.setAttribute("class", "show")
+    };
+    if (secondsLeft <= 0) {
+        // timeCheck = false
+        // secondsLeft = 0
+        questionsSectDiv.setAttribute("class", "hide")
+        container.setAttribute("class", "hide")
+        endScreenEl.setAttribute("class", "show")
+    };
+};
+
+// Clicking submit will save the users name to memory and move you to
+// high score page.
+let subButtonEl = document.querySelector("#submit");
+subButtonEl.addEventListener("click", function() {
+    let userName = document.querySelector("#initials").value;
+    localStorage.setItem("userScore", [userName, score]);
+    document.location.href = '/highscores.html';
+});
+
+// TODO: Need to add a function that adds a li item for every saved score to the
+// TODO: <ol> thats already there. fill it up, save it, view it.
+
+
+
+// !End of Final score screen section
+
+// !Timer section
 
 let timeEl = document.querySelector("#time");
-var secondsLeft = 60;
+let secondsLeft = 60;
+// let timeCheck = true;
 
 function setTime() {
   // Sets interval in variable
@@ -70,27 +177,29 @@ function setTime() {
     secondsLeft--;
     timeEl.textContent = secondsLeft;
 
-    if(secondsLeft === 0) {
+    if(secondsLeft <= 0) {
       // Stops execution of action at set interval
       clearInterval(timerInterval);
-      finalScore();
+    //   secondsLeft = 0
+    //   finalScore();
     }
 
   }, 1000);
 }
 
+// !End of timer section
 
-// End screen section
+// !End-screen section
 
-// This is not needed, the final score will be the number of questions answered.
-let finalScoreEl = document.querySelector("#final-score")
+// // This is not needed, the final score will be the number of questions answered.
+// let finalScoreEl = document.querySelector("#final-score")
 
-let finalScore = function() {
-    finalScoreEl.textContent = secondsLeft
-};
+// let finalScore = function() {
+//     finalScoreEl.textContent = secondsLeft
+// };
 
-// Function makes sure all other sections of quiz game are hidden
-// and displays the End score screen.
+// !Function makes sure all other sections of quiz game are hidden
+// !and displays the End score screen.
 let endScreenEl = document.querySelector("#end-screen")
 let dispEndScreen = function() {
     if (questionsSectDiv.className == "show") {
@@ -102,5 +211,5 @@ let dispEndScreen = function() {
     endScreenEl.setAttribute("class", "show");
 }
 
+// !End of end-screen section
 
-// TODO: Write a function that tracks number of questions answered.
