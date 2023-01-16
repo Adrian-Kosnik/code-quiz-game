@@ -82,8 +82,25 @@ function setTime() {
 
 // End screen section
 
+// This is not needed, the final score will be the number of questions answered.
 let finalScoreEl = document.querySelector("#final-score")
 
 let finalScore = function() {
     finalScoreEl.textContent = secondsLeft
 };
+
+// Function makes sure all other sections of quiz game are hidden
+// and displays the End score screen.
+let endScreenEl = document.querySelector("#end-screen")
+let dispEndScreen = function() {
+    if (questionsSectDiv.className == "show") {
+        questionsSectDiv.setAttribute("class", "hide");
+    };
+    if (container.className == "show") {
+        container.setAttribute("class", "hide");
+    };
+    endScreenEl.setAttribute("class", "show");
+}
+
+
+// TODO: Write a function that tracks number of questions answered.
