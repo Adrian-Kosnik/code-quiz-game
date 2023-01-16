@@ -59,14 +59,6 @@ answer4btn.addEventListener("click", function() {
     console.log(`Im answer4 and I have been clicked!`)
 });
 
-// Function creates you lost message
-
-let lostMsg = function() {
-    
-}
-
-
-
 // This is the timer section
 
 let timeEl = document.querySelector("#time");
@@ -81,10 +73,17 @@ function setTime() {
     if(secondsLeft === 0) {
       // Stops execution of action at set interval
       clearInterval(timerInterval);
-      // TODO: Shows a you lost message!
-      
+      finalScore();
     }
 
   }, 1000);
 }
 
+
+// End screen section
+
+let finalScoreEl = document.querySelector("#final-score")
+
+let finalScore = function() {
+    finalScoreEl.textContent = secondsLeft
+};
