@@ -59,14 +59,6 @@ answer4btn.addEventListener("click", function() {
     console.log(`Im answer4 and I have been clicked!`)
 });
 
-// Function creates you lost message
-
-let lostMsg = function() {
-    
-}
-
-
-
 // This is the timer section
 
 let timeEl = document.querySelector("#time");
@@ -81,10 +73,34 @@ function setTime() {
     if(secondsLeft === 0) {
       // Stops execution of action at set interval
       clearInterval(timerInterval);
-      // TODO: Shows a you lost message!
-      
+      finalScore();
     }
 
   }, 1000);
 }
 
+
+// End screen section
+
+// This is not needed, the final score will be the number of questions answered.
+let finalScoreEl = document.querySelector("#final-score")
+
+let finalScore = function() {
+    finalScoreEl.textContent = secondsLeft
+};
+
+// Function makes sure all other sections of quiz game are hidden
+// and displays the End score screen.
+let endScreenEl = document.querySelector("#end-screen")
+let dispEndScreen = function() {
+    if (questionsSectDiv.className == "show") {
+        questionsSectDiv.setAttribute("class", "hide");
+    };
+    if (container.className == "show") {
+        container.setAttribute("class", "hide");
+    };
+    endScreenEl.setAttribute("class", "show");
+}
+
+
+// TODO: Write a function that tracks number of questions answered.
