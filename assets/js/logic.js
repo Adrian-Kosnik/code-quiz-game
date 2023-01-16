@@ -65,11 +65,6 @@ answer4btn.addEventListener("click", function() {
     console.log(`Im answer4 and I have been clicked!`)
 });
 
-// TODO: need to create a function that replaces the #questions-title title
-// TODO: with next question and the same with the questions them selves.
-// TODO: Also this need to have tracking for and count score every time you get the answer
-// TODO: right and it needs to deduct time for every wrong answer.
-
 let questNumTrack = 1
 let score = localStorage.getItem("score");
 let finalScoreEl = document.querySelector("#final-score")
@@ -98,46 +93,70 @@ console.log(`This is the answer1btn.textContent: ${answer1btn.textContent}`)
 answer1btn.addEventListener("click", function() {
     if (answer1btn.textContent == questionsArr[0].correctAnswer) {
         finalScoreUpdate();
-    } else {
+    } else if (secondsLeft > 0) {
         secondsLeft = secondsLeft - 10;
     };
+    checkIfGameOver();
     nextQuest();
 });
 answer2btn.addEventListener("click", function() {
     if (answer1btn.textContent == questionsArr[1].correctAnswer) {
         finalScoreUpdate();
-    } else {
+    } else if (secondsLeft > 0) {
         secondsLeft = secondsLeft - 10;
     };
+    checkIfGameOver();
     nextQuest();
 });
 answer3btn.addEventListener("click", function() {
     if (answer1btn.textContent == questionsArr[2].correctAnswer) {
         finalScoreUpdate();
-    } else {
+    } else if (secondsLeft > 0) {
         secondsLeft = secondsLeft - 10;
     };
+    checkIfGameOver();
     nextQuest();
 });
 answer4btn.addEventListener("click", function() {
     if (answer1btn.textContent == questionsArr[3].correctAnswer) {
         finalScoreUpdate();
-    } else {
+    } else if (secondsLeft > 0) {
         secondsLeft = secondsLeft - 10;
     };
+    checkIfGameOver();
     nextQuest();
 });
 
-
-
-
 // !End of Questions section
 
+// !Final score screen section
+
+// This part takes you from questions screen to final score screen
+
+let checkIfGameOver = function() {
+    if (questionsArr[questNumTrack] == undefined) {
+        timeCheck = false
+        // secondsLeft = 0
+        questionsSectDiv.setAttribute("class", "hide")
+        container.setAttribute("class", "hide")
+        endScreenEl.setAttribute("class", "show")
+    };
+    if (secondsLeft <= 0) {
+        timeCheck = false
+        // secondsLeft = 0
+        questionsSectDiv.setAttribute("class", "hide")
+        container.setAttribute("class", "hide")
+        endScreenEl.setAttribute("class", "show")
+    };
+};
+
+// !End of Final score screen section
 
 // !Timer section
 
 let timeEl = document.querySelector("#time");
 let secondsLeft = 60;
+let timeCheck = true;
 
 function setTime() {
   // Sets interval in variable
@@ -145,9 +164,10 @@ function setTime() {
     secondsLeft--;
     timeEl.textContent = secondsLeft;
 
-    if(secondsLeft === 0) {
+    if(!timeCheck) {
       // Stops execution of action at set interval
       clearInterval(timerInterval);
+      secondsLeft = 0
     //   finalScore();
     }
 
