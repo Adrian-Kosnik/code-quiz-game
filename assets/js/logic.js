@@ -149,23 +149,63 @@ let checkIfGameOver = function() {
     };
 };
 
+
+
+
+
+
+
 // Clicking submit will save the users name to memory and move you to
 // high score page.
 let subButtonEl = document.querySelector("#submit");
+let userName;
+
+// let userScoreInitArr = []
+// let jsonScoreUserArr = JSON.stringify(userScoreInitArr);
+let userScoreInitArr = localStorage.setItem("userScore", []);
+
 subButtonEl.addEventListener("click", function() {
-    let userName = document.querySelector("#initials").value;
-    localStorage.setItem("userScore", [userName, score]);
+    
+    // This sets the userName to the value of the input field that the user provided
+    userName = document.querySelector("#initials").value;
+    // This created an array with users name and score.
+    let currentUserArr = [userName, score];
+
+    // This converts the currentUserArr from an array to a JSON
+    let jsonUserArr = JSON.stringify(currentUserArr);
+
+    userScoreInitArr.push(jsonUserArr)
+
+    // This sets userScore in browser memory as the value of the JSON
+    localStorage.setItem("userScore", jsonUserArr);
+
     document.location.href = '/highscores.html';
+    dispScores();
 });
+
+
+
+
+
+
+
 
 // TODO: Need to add a function that adds a li item for every saved score to the
 // TODO: <ol> thats already there. fill it up, save it, view it.
+// TODO: There might be an issue when a new game is played, it could clear
+// TODO: the score board, need to make sure that this is not happening.
+// TODO: Currently im setting the userScore as an array with the values,
+// TODO: need to initialize the array and then push the values into it as I go along,
+// TODO: this will ensure that if the user plays multiple times the scoreboard wont get wiped.
+
 
 
 
 // !End of Final score screen section
 
 // !Timer section
+
+// TODO: timer stops at 0 and nothing happens, need to go to score screen.
 
 let timeEl = document.querySelector("#time");
 let secondsLeft = 60;
