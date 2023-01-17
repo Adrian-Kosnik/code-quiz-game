@@ -12,5 +12,5 @@ let userScoreStr = localStorage.getItem('userScore');
 let parsedUserScore = JSON.parse(userScoreStr);
 
 // the json to console to check it is all good
-console.log(parsedUserScore);
+console.log(parsedUserScore.name, parsedUserScore.usrScore);
 
