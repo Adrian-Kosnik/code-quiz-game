@@ -167,7 +167,7 @@ subButtonEl.addEventListener("click", function() {
     // Save the user data to browser memeory
     localStorage.setItem("userScore", currentUserJSON);
     
-    document.location.href = '/highscores.html';
+    document.location.href = './assets/js/highscores.html';
     dispScores();
 });
 
