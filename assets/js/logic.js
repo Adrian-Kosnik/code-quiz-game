@@ -149,6 +149,10 @@ let checkIfGameOver = function() {
     };
 };
 
+
+// ! this needs fixing
+// TODO: the object needs to be an array and the converted to json string
+// TODO: and back when I need it again!
 // Clicking submit will save the users name to memory and move you to
 // high score page.
 let subButtonEl = document.querySelector("#submit");
@@ -167,7 +171,7 @@ subButtonEl.addEventListener("click", function() {
     // Save the user data to browser memeory
     localStorage.setItem("userScore", currentUserJSON);
     
-    document.location.href = '../../highscores.html';
+    document.location.href = './highscores.html';
     dispScores();
 });
 
