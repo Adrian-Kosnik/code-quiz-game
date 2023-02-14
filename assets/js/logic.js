@@ -75,6 +75,12 @@ answer4btn.addEventListener("click", function() {
     console.log(`Im answer4 and I have been clicked!`)
 });
 
+// Function that set score stored in memory to 0 again.
+function clearStoredScore() {
+    score = 0;
+    localStorage.setItem("score", score);
+};
+
 let questNumTrack = 1
 let score = localStorage.getItem("score");
 let finalScoreEl = document.querySelector("#final-score")
@@ -97,10 +103,7 @@ function finalScoreUpdate() {
     score++
     localStorage.setItem("score", score);
 };
-// Function that set score stored in memory to 0 again.
-function clearStoredScore() {
-    localStorage.setItem("score", 0);
-};
+
 
 // Event listener that looks at the answers and adds to the score or lowers time.
 answer1btn.addEventListener("click", function() {
