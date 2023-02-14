@@ -192,6 +192,21 @@ answer4btn.addEventListener("click", function() {
     nextQuest();
 });
 subButtonEl.addEventListener("click", function() {
+    // This sets the userName to the value of the input field that the user provided
+    userName = document.querySelector("#initials").value;
+    // This creates an object with users name and score.
+    let currentUser = {
+        name: userName, 
+        usrScore: score,
+    };
+    // Change currentUser to a JSON string
+    let currentUserJSON = JSON.stringify(currentUser);
+    // Save the user data to browser memeory
+    localStorage.setItem("userScore", currentUserJSON);
+    
+    document.location.href = 'highscores.html';
+    dispScores();
+});
 
     // This sets the userName to the value of the input field that the user provided
     let userName = document.querySelector("#initials").value;
