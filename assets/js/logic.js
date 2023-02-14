@@ -200,6 +200,7 @@ subButtonEl.addEventListener("click", function() {
 // !Timer section
 
 let timeEl = document.querySelector("#time");
+let timerEl = document.querySelector(".timer");
 let secondsLeft = 60;
 
 function setTime() {
@@ -211,7 +212,8 @@ function setTime() {
     if(secondsLeft <= 0) {
       // Stops execution of action at set interval
       clearInterval(timerInterval);
-      secondsLeft = 'Out of time!';
+      secondsLeft = '';
+      timerEl.textContent = 'Out of time!';
       timeEl.textContent = secondsLeft;
     }
 
