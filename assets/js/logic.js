@@ -192,20 +192,26 @@ answer4btn.addEventListener("click", function() {
     nextQuest();
 });
 subButtonEl.addEventListener("click", function() {
-    // let scoreInStorage = localStorage.getItem('userScore');
-    let scoreInStorageParsed = JSON.parse(scoreInStorage) || [];
+
     // This sets the userName to the value of the input field that the user provided
     let userName = document.querySelector("#initials").value;
-    // This creates an object with users name and score.
-    //! Changed this to an array, 
-    let currentUser = [userName, score];
-    scoreInStorageParsed.push(currentUser);
-    let currentUserJSON = JSON.stringify(scoreInStorageParsed);
-    // Change currentUser to a JSON string
-    // let currentUserJSON = JSON.stringify(currentUser);
-    // Save the user data to browser memeory
-    localStorage.setItem("userScore", currentUserJSON);
-    document.location.href = 'highscores.html';
-    dispScores();
+
+    let currentPersonObj = {
+        score,
+        initials: userName,
+    };
+    // Gets results array from localstorage or create an empty array
+    let storedScores = JSON.parse(localStorage.getItem("results")) || [];
+    // Adds new score to the results array
+    storedScores.push(currentPersonObj);
+    // Save updated results array to localstorage
+    localStorage.setItem("results", JSON.stringify(storedScores));
+    submitBtn.removeEventListener("click", saveResultToLocalStorage);
+    
+    dispEndScreen();
+
+    // Moves user to Highscores page
+    document.location.href = "./highscores.html";
+
 });
 //! End of eventListeners section
