@@ -1,18 +1,21 @@
+//! Start screen section
+
 let startBtn = document.querySelector("#start");
 let container = document.querySelector("#start-screen");
 let questionsSectDiv = document.querySelector("#questions");
 let choicesDiv = document.querySelector("#choices");
 let questionTitleh2 = document.querySelector("#question-title");
 
+// Start button listener
 startBtn.addEventListener("click", function() {
-    console.log(`I have been clicked!`);
     container.setAttribute("class", "hide");
     questionsSectDiv.setAttribute("class", "show");
-    score = 0;
     setTime();
 });
 
-// !Questions section
+//! End of start screen section
+
+//! Questions section
 
 // Create ordered list items
 let listEl = document.createElement("ol");
@@ -156,52 +159,48 @@ let checkIfGameOver = function() {
 // Clicking submit will save the users name to memory and move you to
 // high score page.
 let subButtonEl = document.querySelector("#submit");
-let userName;
+// let userName;
+
+// I need to check if there is anything in memory already and if there is
+// append the new score, if not then just save it.
+
 
 subButtonEl.addEventListener("click", function() {
+
+
+    // if (!localStorage.getItem('userScore')) {
+    //     localStorage.setItem("userScore", []);
+    // } 
+
+    // let scoreInStorage = localStorage.getItem('userScore');
+    let scoreInStorageParsed = JSON.parse(scoreInStorage) || [];
+
     // This sets the userName to the value of the input field that the user provided
-    userName = document.querySelector("#initials").value;
+    let userName = document.querySelector("#initials").value;
+
     // This creates an object with users name and score.
-    let currentUser = {
-        name: userName, 
-        usrScore: score,
-    };
+    //! Changed this to an array, 
+    let currentUser = [userName, score];
+
+    scoreInStorageParsed.push(currentUser);
+    let currentUserJSON = JSON.stringify(scoreInStorageParsed);
+
+
     // Change currentUser to a JSON string
-    let currentUserJSON = JSON.stringify(currentUser);
+    // let currentUserJSON = JSON.stringify(currentUser);
     // Save the user data to browser memeory
     localStorage.setItem("userScore", currentUserJSON);
     
-    document.location.href = '../../../highscores.html';
+    document.location.href = 'highscores.html';
     dispScores();
 });
-
-
-
-
-
-
-
-
-// TODO: Need to add a function that adds a li item for every saved score to the
-// TODO: <ol> thats already there. fill it up, save it, view it.
-// TODO: There might be an issue when a new game is played, it could clear
-// TODO: the score board, need to make sure that this is not happening.
-// TODO: Currently im setting the userScore as an array with the values,
-// TODO: need to initialize the array and then push the values into it as I go along,
-// TODO: this will ensure that if the user plays multiple times the scoreboard wont get wiped.
-
-
-
 
 // !End of Final score screen section
 
 // !Timer section
 
-// TODO: timer stops at 0 and nothing happens, need to go to score screen.
-
 let timeEl = document.querySelector("#time");
 let secondsLeft = 60;
-// let timeCheck = true;
 
 function setTime() {
   // Sets interval in variable
@@ -212,8 +211,8 @@ function setTime() {
     if(secondsLeft <= 0) {
       // Stops execution of action at set interval
       clearInterval(timerInterval);
-    //   secondsLeft = 0
-    //   finalScore();
+      secondsLeft = 'Out of time!';
+      timeEl.textContent = secondsLeft;
     }
 
   }, 1000);
