@@ -211,7 +211,7 @@ subButtonEl.addEventListener("click", function() {
     dispEndScreen();
 
     // Moves user to Highscores page
-    document.location.href = "./highscores.html";
+    document.location.href = "./scores.html";
 
 });
 //! End of eventListeners section
