@@ -1,18 +1,21 @@
-// this is the highscres <ol> element
-let highScoresEl = document.querySelector("#highscores")
-// this grabs the json of usernames/scores from browser memory
-let userScoreStr = localStorage.getItem('userScore');
-// converting json to object
-let parsedUserScore = JSON.parse(userScoreStr);
-
-// This creates new li for user score
-let newLiElm = document.createElement("li");
-newLiElm.textContent = (`${parsedUserScore[0]} - ${parsedUserScore[1]}`);
-highScoresEl.appendChild(newLiElm)
-
+// This is the highscres <ol> element
+let scoresEl = document.querySelector("#scores");
 let clearScoresBtn = document.querySelector("#clear");
 
+let something = localStorage.getItem('results');
+
+let userScoresStored = JSON.parse(something);
+console.log(userScoresStored);
+
+for (let i = userScoresStored.length - 1; i >= 0; i--) {
+    let listEl = document.createElement("li");
+    listEl.setAttribute("class", "scoreLi");
+    listEl.textContent = (`${userScoresStored[i].initials} - ${userScoresStored[i].score}`);
+
+    scoresEl.appendChild(listEl);
+};
+
 clearScoresBtn.addEventListener("click", function() {
-    localStorage.clear()
-    newLiElm.remove()
+    localStorage.clear();
+    scoresEl.remove();
 });
