@@ -10,6 +10,7 @@ let questionTitleh2 = document.querySelector("#question-title");
 startBtn.addEventListener("click", function() {
     container.setAttribute("class", "hide");
     questionsSectDiv.setAttribute("class", "show");
+    clearStoredScore();
     setTime();
 });
 
@@ -29,32 +30,37 @@ let answer3btn = document.createElement("button");
 let answer4btn = document.createElement("button");
 
 // Changes the h2 to the question
-questionTitleh2.textContent = questionsArr[0].question
+questionTitleh2.textContent = questionsArr[0].question;
 // this fills list with questions
 answer1btn.textContent = questionsArr[0].choices[0];
 answer2btn.textContent = questionsArr[0].choices[1];
 answer3btn.textContent = questionsArr[0].choices[2];
 answer4btn.textContent = questionsArr[0].choices[3];
+// Adds id to the answers
+answer1btn.setAttribute("id", "answer1btn");
+answer2btn.setAttribute("id", "answer2btn");
+answer3btn.setAttribute("id", "answer3btn");
+answer4btn.setAttribute("id", "answer4btn");
 // Adds class to the answers
-answer1btn.setAttribute("class", "answer1btn")
-answer2btn.setAttribute("class", "answer2btn")
-answer3btn.setAttribute("class", "answer3btn")
-answer4btn.setAttribute("class", "answer4btn")
+answer1btn.setAttribute("class", "answerbtn");
+answer2btn.setAttribute("class", "answerbtn");
+answer3btn.setAttribute("class", "answerbtn");
+answer4btn.setAttribute("class", "answerbtn");
 
 // this adds the list to choices div within the DOM
-choicesDiv.appendChild(listEl)
+choicesDiv.appendChild(listEl);
 
-choicesDiv.children[0].appendChild(answer1li)
-choicesDiv.children[0].appendChild(answer2li)
-choicesDiv.children[0].appendChild(answer3li)
-choicesDiv.children[0].appendChild(answer4li)
+choicesDiv.children[0].appendChild(answer1li);
+choicesDiv.children[0].appendChild(answer2li);
+choicesDiv.children[0].appendChild(answer3li);
+choicesDiv.children[0].appendChild(answer4li);
 
-let choicesDivOl = choicesDiv.children[0]
+let choicesDivOl = choicesDiv.children[0];
 
-choicesDivOl.children[0].appendChild(answer1btn)
-choicesDivOl.children[1].appendChild(answer2btn)
-choicesDivOl.children[2].appendChild(answer3btn)
-choicesDivOl.children[3].appendChild(answer4btn)
+choicesDivOl.children[0].appendChild(answer1btn);
+choicesDivOl.children[1].appendChild(answer2btn);
+choicesDivOl.children[2].appendChild(answer3btn);
+choicesDivOl.children[3].appendChild(answer4btn);
 
 answer1btn.addEventListener("click", function() {
     console.log(`Im answer1 and I have been clicked!`)
@@ -86,11 +92,16 @@ let nextQuest = function() {
 };
 
 // Function that creates, updates the score. stored locally in users browser.
-let finalScoreUpdate = function() {
+function finalScoreUpdate() {
     finalScoreEl.textContent = score;
     score++
     localStorage.setItem("score", score);
-}
+};
+// Function that set score stored in memory to 0 again.
+function clearStoredScore() {
+    localStorage.setItem("score", 0);
+};
+
 // Event listener that looks at the answers and adds to the score or lowers time.
 answer1btn.addEventListener("click", function() {
     if (answer1btn.textContent == questionsArr[0].correctAnswer) {
@@ -135,17 +146,13 @@ answer4btn.addEventListener("click", function() {
 
 // This part takes you from questions screen to final score screen
 
-let checkIfGameOver = function() {
+function checkIfGameOver() {
     if (questionsArr[questNumTrack] == undefined) {
-        // timeCheck = false
-        // secondsLeft = 0
         questionsSectDiv.setAttribute("class", "hide")
         container.setAttribute("class", "hide")
         endScreenEl.setAttribute("class", "show")
     };
     if (secondsLeft <= 0) {
-        // timeCheck = false
-        // secondsLeft = 0
         questionsSectDiv.setAttribute("class", "hide")
         container.setAttribute("class", "hide")
         endScreenEl.setAttribute("class", "show")
@@ -224,17 +231,10 @@ function setTime() {
 
 // !End-screen section
 
-// // This is not needed, the final score will be the number of questions answered.
-// let finalScoreEl = document.querySelector("#final-score")
-
-// let finalScore = function() {
-//     finalScoreEl.textContent = secondsLeft
-// };
-
 // !Function makes sure all other sections of quiz game are hidden
 // !and displays the End score screen.
 let endScreenEl = document.querySelector("#end-screen")
-let dispEndScreen = function() {
+function dispEndScreen() {
     if (questionsSectDiv.className == "show") {
         questionsSectDiv.setAttribute("class", "hide");
     };
