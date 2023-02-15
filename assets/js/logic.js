@@ -80,8 +80,8 @@ let clearStoredScore = function() {
 };
 // Function that creates, updates the score. stored locally in users browser.
 function finalScoreUpdate() {
-    finalScoreEl.textContent = score;
     score++
+    finalScoreEl.textContent = score;
     localStorage.setItem("score", score);
 };
 function nextQuest() {

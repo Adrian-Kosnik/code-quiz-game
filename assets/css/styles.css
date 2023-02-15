@@ -53,6 +53,11 @@ li:nth-child(odd) {
   background-color: #f3edfc;
 }
 
+#question-title {
+  width: 600px;
+  height: 66px;
+}
+
 .answerbtn {
   width: 590px;
   height: 51px;
