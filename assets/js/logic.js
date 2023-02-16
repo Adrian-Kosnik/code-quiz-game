@@ -142,18 +142,7 @@ startBtn.addEventListener("click", function() {
     clearStoredScore();
     setTime();
 });
-answer1btn.addEventListener("click", function() {
-    console.log(`Im answer1 and I have been clicked!`)
-});
-answer2btn.addEventListener("click", function() {
-    console.log(`Im answer2 and I have been clicked!`)
-});
-answer3btn.addEventListener("click", function() {
-    console.log(`Im answer3 and I have been clicked!`)
-});
-answer4btn.addEventListener("click", function() {
-    console.log(`Im answer4 and I have been clicked!`)
-});
+
 // Event listener that looks at the answers and adds to the score or lowers time.
 answer1btn.addEventListener("click", function() {
     if (answer1btn.textContent == questionsArr[0].correctAnswer) {
@@ -165,7 +154,7 @@ answer1btn.addEventListener("click", function() {
     nextQuest();
 });
 answer2btn.addEventListener("click", function() {
-    if (answer1btn.textContent == questionsArr[1].correctAnswer) {
+    if (answer2btn.textContent == questionsArr[1].correctAnswer) {
         finalScoreUpdate();
     } else if (secondsLeft > 0) {
         secondsLeft = secondsLeft - 10;
@@ -174,7 +163,7 @@ answer2btn.addEventListener("click", function() {
     nextQuest();
 });
 answer3btn.addEventListener("click", function() {
-    if (answer1btn.textContent == questionsArr[2].correctAnswer) {
+    if (answer3btn.textContent == questionsArr[2].correctAnswer) {
         finalScoreUpdate();
     } else if (secondsLeft > 0) {
         secondsLeft = secondsLeft - 10;
@@ -183,7 +172,7 @@ answer3btn.addEventListener("click", function() {
     nextQuest();
 });
 answer4btn.addEventListener("click", function() {
-    if (answer1btn.textContent == questionsArr[3].correctAnswer) {
+    if (answer4btn.textContent == questionsArr[3].correctAnswer) {
         finalScoreUpdate();
     } else if (secondsLeft >= 0) {
         secondsLeft = secondsLeft - 10;
